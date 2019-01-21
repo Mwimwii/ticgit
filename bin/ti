@@ -10,4 +10,11 @@ if File.exist? File.join('lib', 'ticgit-ng.rb')
 end
 require 'ticgit-ng'
 
+<<<<<<< HEAD
 TicGitNG::CLI.execute
+=======
+require 'rubygems'
+#require 'ticgit'
+require File.dirname(__FILE__) + '/../lib/ticgit'
+TicGit::CLI.execute
+>>>>>>> 3c92a80db8053ce8624bb1d827c64ad0d43e05d0

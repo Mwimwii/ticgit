@@ -108,7 +108,21 @@ describe TicGitNG::Base do
     t.comments.size.should eql(1)
     t.comments.first.comment.should eql('my new comment')
   end
+<<<<<<< HEAD
 
+=======
+  
+  it "should be able to attach files to tickets" do
+    t = @ticgit.ticket_new('attachment ticket')
+    t.attachments.size.should eql(0)
+    
+    @ticgit.ticket_attach("#{Dir.getwd}/README", t.ticket_id)
+    t = @ticgit.ticket_show(t.ticket_id)
+    t.attachments.size.should eql(1)
+    t.attachments.first.filename.should eql("README")
+  end
+  
+>>>>>>> 3c92a80db8053ce8624bb1d827c64ad0d43e05d0
   it "should retrieve specific tickets" do
     tid = @ticgitng.ticket_list.last.ticket_id
     tic = @ticgitng.ticket_show(tid)

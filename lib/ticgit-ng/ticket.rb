@@ -54,6 +54,7 @@ module TicGitNG
           case data[0]
           when 'ASSIGNED'
             t.assigned = data[1]
+<<<<<<< HEAD:lib/ticgit-ng/ticket.rb
           when 'ATTACHMENT'
             t.attachments << TicGitNG::Attachment.new(base, fname, value)
           when 'COMMENT'
@@ -63,6 +64,16 @@ module TicGitNG
           when 'STATE'
             t.state = data[1]
           when 'TAG'
+=======
+          end
+          if data[0] == 'ATTACHMENT'
+            t.attachments << TicGit::Attachment.new(base,fname,value)
+          end
+          if data[0] == 'COMMENT'
+            t.comments << TicGit::Comment.new(base, fname, value)
+          end
+          if data[0] == 'TAG'
+>>>>>>> 3c92a80db8053ce8624bb1d827c64ad0d43e05d0:lib/ticgit/ticket.rb
             t.tags << data[1]
           when 'TITLE'
             t.title = base.git.gblob(value).contents
@@ -129,6 +140,16 @@ module TicGitNG
         end
         base.git.add
         base.git.commit("added comment to ticket #{ticket_name}")
+      end
+    end
+    
+    def add_attachment(file)  
+      base.in_branch do |wd|
+        Dir.chdir(ticket_name) do
+          FileUtils.copy(file,attachment_name(email,File.basename(file)))
+        end
+        base.git.add
+        base.git.commit("added attachment to ticket #{ticket_name}")
       end
     end
 
@@ -217,11 +238,24 @@ module TicGitNG
     def path
       File.join(state, ticket_name)
     end
+<<<<<<< HEAD:lib/ticgit-ng/ticket.rb
 
     def comment_name(email)
       'COMMENT_' + Time.now.to_i.to_s + '_' + email
     end
 
+=======
+    
+    
+    def attachment_name(email,filename)
+      'ATTACHMENT_' + Time.now.to_i.to_s + '_' + email + "@@" + filename
+    end
+    def comment_name(email)
+      'COMMENT_' + Time.now.to_i.to_s + '_' + email
+    end
+    
+    
+>>>>>>> 3c92a80db8053ce8624bb1d827c64ad0d43e05d0:lib/ticgit/ticket.rb
     def email
       opts[:user_email] || 'anon'
     end
